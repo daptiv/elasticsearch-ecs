@@ -24,7 +24,7 @@ Because the container relies on EC2 discovery to form a cluster, EC2 instances s
 
 ### Sample Task Definition
 
-items marked with {{ }} change between aws accounts, so aren't listed here.
+items marked with {{ }} change between aws accounts, so aren't listed here.  Container memory must be larger than the ES_HEAP_SIZE.
 
 ```js
 {
