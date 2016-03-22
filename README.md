@@ -3,7 +3,7 @@ An elastic search docker container intended to be hosted on ecs.  Forked from ht
 
 ### Recommended EC2 Permissions
 
-Because the container relies on EC2 discovery to form a cluster,EC2 instances spun up in the ECS cluster will need to be able to make calls to the EC2 service. If your current ECS Instance IAM Role currently isn't granted ec2:DescribeInstances action, you might want to create a new IAM Policy with it.
+Because the container relies on EC2 discovery to form a cluster, EC2 instances spun up in the ECS cluster will need to be able to make calls to the EC2 service. If your current ECS Instance IAM Role currently isn't granted ec2:DescribeInstances action, you might want to create a new IAM Policy with it.
 
 ```js
 {
@@ -24,7 +24,7 @@ Because the container relies on EC2 discovery to form a cluster,EC2 instances sp
 
 ### Sample Task Definition
 
-items marked with {{ }} are specific to a particular aws account, so aren't listed here.
+items marked with {{ }} change between aws accounts, so aren't listed here.
 
 ```js
 {
