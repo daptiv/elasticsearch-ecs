@@ -100,7 +100,7 @@ items marked with {{ }} change between aws accounts, so aren't listed here.  Con
 }
 ```
 
-### Mounting a volume available to ecs
+### Mounting a Volume and Making it Available to ECS
 
 The following userdata can be used to mount an EBS volume labelled /dev/sdb to /opt/vol00 on the EC2 instance - which can then be referenced in the task defenition.
 
