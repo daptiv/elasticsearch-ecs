@@ -99,3 +99,21 @@ items marked with {{ }} change between aws accounts, so aren't listed here.  Con
   "family": "elasticsearch"
 }
 ```
+
+### Mounting a volume available to ecs
+
+The following userdata can be used to mount an EBS volume labelled /dev/sdb to /opt/vol00 on the EC2 instance - which can then be referenced in the task defenition.
+
+```bash
+#!/bin/bash
+echo ECS_CLUSTER=Elasticsearch >> /etc/ecs/ecs.config
+
+# Mount /dev/sdb EBS volume to /opt/vol00
+mkfs -t ext4 /dev/sdb
+mkdir /opt/vol00
+mount /dev/sdb /opt/vol00
+echo "/dev/sdb /opt/vol00 ext4 defaults,nofail 0 2" >> /etc/fstab
+
+# The Docker daemon must be restarted to see the new mount
+sudo service docker restart
+```
