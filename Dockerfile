@@ -1,7 +1,7 @@
-FROM elasticsearch:1.7
+FROM elasticsearch:2.2
 WORKDIR /usr/share/elasticsearch
-RUN bin/plugin -i elasticsearch/elasticsearch-cloud-aws/2.7.1
-RUN bin/plugin -i mobz/elasticsearch-head
+RUN bin/plugin install cloud-aws
+RUN bin/plugin install mobz/elasticsearch-head
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
