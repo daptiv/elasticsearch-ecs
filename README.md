@@ -10,7 +10,7 @@ https://github.com/mobz/elasticsearch-head
 
 ##### aws-cloud
 
-The official elasticsearch plugin for discovery  
+The official elasticsearch plugin for discovery in aws  
 https://www.elastic.co/guide/en/elasticsearch/plugins/current/cloud-aws.html
 
 ### Recommended EC2 Permissions
