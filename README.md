@@ -255,7 +255,7 @@ discovery.zen.minimum_master_nodes: 2
 
 #### Memory
 
-Swapping memory to disk can cause performance issues in a cluster. the memory can be locked using the bootstrap.mlockall option in the configuration file.  See: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html#_swapping_is_the_death_of_performance https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html#_swapping_is_the_death_of_performance
+Swapping memory to disk can cause performance issues in a cluster. the memory can be locked using the bootstrap.mlockall option in the configuration file.  See: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html#_swapping_is_the_death_of_performance
 
 ```
 bootstrap.mlockall: true
