@@ -34,6 +34,24 @@ Because the container relies on EC2 discovery to form a cluster, EC2 instances s
 }
 ```
 
+### Mounting a Volume and Making it Available to ECS
+
+The following userdata can be used to mount an EBS volume labelled /dev/sdb to /opt/vol00 on the EC2 instance - which can then be referenced in the task defenition.
+
+```bash
+#!/bin/bash
+echo ECS_CLUSTER=Elasticsearch >> /etc/ecs/ecs.config
+
+# Mount /dev/sdb EBS volume to /opt/vol00
+mkfs -t ext4 /dev/sdb
+mkdir /opt/vol00
+mount /dev/sdb /opt/vol00
+echo "/dev/sdb /opt/vol00 ext4 defaults,nofail 0 2" >> /etc/fstab
+
+# The Docker daemon must be restarted to see the new mount
+sudo service docker restart
+```
+
 ### Sample Task Definition
 
 items marked with {{ }} change between aws accounts, so aren't listed here.  Container memory must be larger than the ES_HEAP_SIZE.
@@ -112,20 +130,30 @@ items marked with {{ }} change between aws accounts, so aren't listed here.  Con
 }
 ```
 
-### Mounting a Volume and Making it Available to ECS
+### Critical Parts of the Sample Task Definition
 
-The following userdata can be used to mount an EBS volume labelled /dev/sdb to /opt/vol00 on the EC2 instance - which can then be referenced in the task defenition.
+#### Mount points
 
-```bash
-#!/bin/bash
-echo ECS_CLUSTER=Elasticsearch >> /etc/ecs/ecs.config
+If an ebs volume is to be used for elasticsearch data storage (by default it will use the docker storage on the ECS AMI, mounted at /dev/xvdcz), it should be configured here:  
 
-# Mount /dev/sdb EBS volume to /opt/vol00
-mkfs -t ext4 /dev/sdb
-mkdir /opt/vol00
-mount /dev/sdb /opt/vol00
-echo "/dev/sdb /opt/vol00 ext4 defaults,nofail 0 2" >> /etc/fstab
+```
+"mountPoints": [
+  {
+    "containerPath": "/usr/share/elasticsearch/data",
+    "sourceVolume": "vol00",
+    "readOnly": null
+  }
+]
+```
 
-# The Docker daemon must be restarted to see the new mount
-sudo service docker restart
+and/or if you wish to provide a configuration file (elasticsearch-config references a elasticsearch config file on the EC2 host, which was copied from s3 in the EC2 intance user data):
+
+```      
+"mountPoints": [
+  {
+    "containerPath": "/usr/share/elasticsearch/config/elasticsearch.yml",
+    "sourceVolume": "elasticsearch-config",
+    "readOnly": null
+  }
+]
 ```
