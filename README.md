@@ -219,11 +219,9 @@ node.data: true
 
 #### Cluster Name
 
-If multiple clusters are running on the same security group, a name can be specified for each cluster so that they stay seperated.
+If multiple clusters are running on the same security group, a name can be specified for each cluster so that they stay seperated during aws descovery.
 
 ```
-# Cluster name identifies your cluster for auto-discovery. If you're running
-# multiple clusters on the same network, make sure you're using unique names.
 cluster.name: gra-elk
 ```
 
