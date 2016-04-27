@@ -260,3 +260,17 @@ Swapping memory to disk can cause performance issues in a cluster. the memory ca
 ```
 bootstrap.mlockall: true
 ```
+
+#### Name
+
+If better names are needed than the default superhero names, they can be set as the id of the EC2 instance hosting the container with some scripting in the user data.
+
+```
+node.name: "i-12345678"
+```
+
+```
+idDocument=http://169.254.169.254/latest/dynamic/instance-identity/document  
+RESOURCE_ID=`curl -s $idDocument | grep instanceId | cut -d \" -f4`  
+echo $'\n'node.name: \"$RESOURCE_ID\" >> {{ Elasticsearch config yml file location }}
+```
