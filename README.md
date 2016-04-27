@@ -263,11 +263,13 @@ bootstrap.mlockall: true
 
 #### Name
 
-If better names are needed than the default superhero names, they can be set as the id of the EC2 instance hosting the container with some scripting in the user data.
+If better names are needed than the default superhero names, they can be set using the node.name property.
 
 ```
 node.name: "i-12345678"
 ```
+
+Or, to set it as the ID of the EC2 instance hosting the container, this can be done in the ec2 user data.
 
 ```
 idDocument=http://169.254.169.254/latest/dynamic/instance-identity/document  
