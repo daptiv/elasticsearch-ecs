@@ -54,7 +54,7 @@ sudo service docker restart
 
 ### Sample Task Definition
 
-items marked with {{ }} change between aws accounts, so aren't listed here.  Container memory must be larger than the ES_HEAP_SIZE.
+items marked with {{ }} change between aws accounts, so aren't listed here.
 
 ```js
 {
@@ -167,5 +167,37 @@ these settings can be required as a command or in the elasticsearch.yml config f
   "/docker-entrypoint.sh",
   "--discovery.type=ec2",
   "--discovery.ec2.groups={{ name or id of security group assigned to ec2 instances in the cluster ie. sg-1a2b3c4d }}"
+]
+```
+
+#### Port Mapping
+
+elasticsearch uses port 9300 for communication within the cluster, and exposes it's api on port 9200 - so these will need to be mapped to the container host.
+
+```
+"portMappings": [
+  {
+    "hostPort": 9200,
+    "containerPort": 9200,
+    "protocol": "tcp"
+  },
+  {
+    "hostPort": 9300,
+    "containerPort": 9300,
+    "protocol": "tcp"
+  }
+]
+```
+
+#### Environment
+
+the installations heap size (1g by default) can be configured via the ES_HEAP_SIZE environment variable for the container.  The reserved memory of the container must be larger than the ES_HEAP_SIZE.  Recommendations about what to set this value as can be found here: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html
+ 
+```
+"environment": [
+  {
+    "name": "ES_HEAP_SIZE",
+    "value": "1g"
+  }
 ]
 ```
