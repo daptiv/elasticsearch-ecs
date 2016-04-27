@@ -236,3 +236,19 @@ index.number_of_shards: 5
 index.number_of_replicas: 1
 ```
 
+#### Network Host
+
+This is present in the official elasticsearch container's elasticsearch.yml, and seems to be required for ec2 discovery to function correctly.
+
+```
+# This is in the default elasticsearch.yml and seems to be needed for aws descovery
+network.host: 0.0.0.0
+```
+
+#### Minimum Master Nodes
+
+When running more than 2 nodes in a cluster, the minimum number of master nodes must be set in order to mitigate the risk of running into the split brain problem.  See: https://www.elastic.co/guide/en/elasticsearch/guide/1.x/_important_configuration_changes.html#_minimum_master_nodes
+
+```
+discovery.zen.minimum_master_nodes: 2
+```
