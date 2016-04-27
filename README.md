@@ -211,9 +211,30 @@ The following can be configured in the elasticsearch.yml configuration file if r
 If the cluster grows to be larger than a couple of nodes, nodes should be designated as either designated master or dedicated data nodes for cluster stability.  See: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
 
 ```
-
 # Allow this node to be eligible as a master node (enabled by default):
 node.master: true
 # Allow this node to store data (enabled by default):
 node.data: true
 ```
+
+#### Cluster Name
+
+If multiple clusters are running on the same security group, a name can be specified for each cluster so that they stay seperated.
+
+```
+# Cluster name identifies your cluster for auto-discovery. If you're running
+# multiple clusters on the same network, make sure you're using unique names.
+cluster.name: gra-elk
+```
+
+#### Index Configuration
+
+The number of replicas and shards per index should be altered away from the default for larger clusters.  Search performance and availablity is increased with more replication, while an increase in sharding will enhance indexing performance and are a factor in if and how an index can be split accross nodes in the cluster.
+
+```
+# Set the number of shards (splits) of an index (5 by default):
+index.number_of_shards: 5
+# Set the number of replicas (additional copies) of an index (1 by default):
+index.number_of_replicas: 1
+```
+
