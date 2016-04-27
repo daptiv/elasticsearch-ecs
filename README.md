@@ -201,3 +201,19 @@ the installations heap size (1g by default) can be configured via the ES_HEAP_SI
   }
 ]
 ```
+
+### Optional Configuration
+
+The following can be configured in the elasticsearch.yml configuration file if required.
+
+#### Node Type
+
+If the cluster grows to be larger than a couple of nodes, nodes should be designated as either designated master or dedicated data nodes for cluster stability.  See: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
+
+```
+
+# Allow this node to be eligible as a master node (enabled by default):
+node.master: true
+# Allow this node to store data (enabled by default):
+node.data: true
+```
