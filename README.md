@@ -157,3 +157,15 @@ and/or if you wish to provide a configuration file (elasticsearch-config referen
   }
 ]
 ```
+
+#### Command
+
+these settings can be required as a command or in the elasticsearch.yml config file.  However they are required for containers destributed accross EC2 instances to form a cluster.  This is part of the aws-cloud plugin and is documented here: https://www.elastic.co/guide/en/elasticsearch/plugins/2.3/cloud-aws-discovery.html
+
+```
+"command": [
+  "/docker-entrypoint.sh",
+  "--discovery.type=ec2",
+  "--discovery.ec2.groups={{ name or id of security group assigned to ec2 instances in the cluster ie. sg-1a2b3c4d }}"
+]
+```
