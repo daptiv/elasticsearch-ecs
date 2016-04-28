@@ -138,7 +138,7 @@ items marked with {{ }} change between aws accounts, so aren't listed here.
 
 ### Critical Parts of the Sample Task Definition
 
-#### Mount points
+##### Mount points
 
 If an ebs volume is to be used for elasticsearch data storage (by default it will use the docker storage on the ECS AMI, mounted at /dev/xvdcz), it should be configured here:  
 
@@ -165,7 +165,7 @@ and/or if you wish to provide a configuration file (elasticsearch-config referen
 ```
 
 
-#### Command
+##### Command
 
 these settings can be required as a command or in the elasticsearch.yml config file.  However they are required for containers destributed accross EC2 instances to form a cluster.  This is part of the aws-cloud plugin and is documented here: https://www.elastic.co/guide/en/elasticsearch/plugins/2.3/cloud-aws-discovery.html
 
@@ -178,7 +178,7 @@ these settings can be required as a command or in the elasticsearch.yml config f
 ```
 
 
-#### Port Mapping
+##### Port Mapping
 
 elasticsearch uses port 9300 for communication within the cluster, and exposes it's api on port 9200 - so these will need to be mapped to the container host.
 
@@ -198,7 +198,7 @@ elasticsearch uses port 9300 for communication within the cluster, and exposes i
 ```
 
 
-#### Environment
+##### Environment
 
 the installations heap size (1g by default) can be configured via the ES_HEAP_SIZE environment variable for the container.  The reserved memory of the container must be larger than the ES_HEAP_SIZE.  Recommendations about what to set this value as can be found here: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html
  
@@ -217,7 +217,7 @@ the installations heap size (1g by default) can be configured via the ES_HEAP_SI
 The following can be configured in the elasticsearch.yml configuration file if required.
 
 
-#### Node Type
+##### Node Type
 
 If the cluster grows to be larger than a couple of nodes, nodes should be designated as either designated master or dedicated data nodes for cluster stability.  See: https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-node.html
 
@@ -229,7 +229,7 @@ node.data: true
 ```
 
 
-#### Cluster Name
+##### Cluster Name
 
 If multiple clusters are running on the same security group, a name can be specified for each cluster so that they stay seperated during aws discovery.
 
@@ -238,7 +238,7 @@ cluster.name: gra-elk
 ```
 
 
-#### Index Configuration
+##### Index Configuration
 
 The number of replicas and shards per index should be altered away from the default for larger clusters.  Search performance and availablity is increased with more replication, while an increase in sharding will enhance indexing performance and are a factor in if and how an index can be split accross nodes in the cluster.
 
@@ -250,7 +250,7 @@ index.number_of_replicas: 1
 ```
 
 
-#### Network Host
+##### Network Host
 
 This is present in the official elasticsearch container's elasticsearch.yml, and seems to be required for ec2 discovery to function correctly.
 
@@ -260,7 +260,7 @@ network.host: 0.0.0.0
 ```
 
 
-#### Minimum Master Nodes
+##### Minimum Master Nodes
 
 When running more than 2 nodes in a cluster, the minimum number of master nodes must be set in order to mitigate the risk of running into the split brain problem.  See: https://www.elastic.co/guide/en/elasticsearch/guide/1.x/_important_configuration_changes.html#_minimum_master_nodes
 
@@ -269,7 +269,7 @@ discovery.zen.minimum_master_nodes: 2
 ```
 
 
-#### Memory
+##### Memory
 
 Swapping memory to disk can cause performance issues in a cluster. the memory can be locked using the bootstrap.mlockall option in the configuration file.  See: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html#_swapping_is_the_death_of_performance
 
@@ -277,7 +277,7 @@ Swapping memory to disk can cause performance issues in a cluster. the memory ca
 bootstrap.mlockall: true
 ```  
 
-#### Name
+##### Name
 
 If better names are needed than the default superhero names, they can be set using the node.name property.
 
