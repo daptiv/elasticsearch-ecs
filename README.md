@@ -275,8 +275,7 @@ Swapping memory to disk can cause performance issues in a cluster. the memory ca
 
 ```
 bootstrap.mlockall: true
-```
-
+```  
 
 #### Name
 
