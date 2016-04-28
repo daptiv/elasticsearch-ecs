@@ -1,6 +1,7 @@
 # elasticsearch-ecs
 An elastic search docker container intended to be hosted on ecs.  Forked from http://blog.dmcquay.com/devops/2015/09/12/running-elasticsearch-on-aws-ecs.html
 
+
 ### Installed Plugins
 
 ##### Elasticsearch-head
@@ -8,10 +9,12 @@ An elastic search docker container intended to be hosted on ecs.  Forked from ht
 A Basic Frontend for the elasticsearch cluster  
 https://github.com/mobz/elasticsearch-head
 
+
 ##### aws-cloud
 
 The official elasticsearch plugin for discovery in aws  
 https://www.elastic.co/guide/en/elasticsearch/plugins/current/cloud-aws.html
+
 
 ### Recommended EC2 Permissions
 
@@ -34,6 +37,7 @@ Because the container relies on EC2 discovery to form a cluster, EC2 instances s
 }
 ```
 
+
 ### Mounting a Volume and Making it Available to ECS
 
 The following userdata can be used to mount an EBS volume labelled /dev/sdb to /opt/vol00 on the EC2 instance - which can then be referenced in the task defenition.
@@ -51,6 +55,7 @@ echo "/dev/sdb /opt/vol00 ext4 defaults,nofail 0 2" >> /etc/fstab
 # The Docker daemon must be restarted to see the new mount
 sudo service docker restart
 ```
+
 
 ### Sample Task Definition
 
@@ -130,6 +135,7 @@ items marked with {{ }} change between aws accounts, so aren't listed here.
 }
 ```
 
+
 ### Critical Parts of the Sample Task Definition
 
 #### Mount points
@@ -158,6 +164,7 @@ and/or if you wish to provide a configuration file (elasticsearch-config referen
 ]
 ```
 
+
 #### Command
 
 these settings can be required as a command or in the elasticsearch.yml config file.  However they are required for containers destributed accross EC2 instances to form a cluster.  This is part of the aws-cloud plugin and is documented here: https://www.elastic.co/guide/en/elasticsearch/plugins/2.3/cloud-aws-discovery.html
@@ -169,6 +176,7 @@ these settings can be required as a command or in the elasticsearch.yml config f
   "--discovery.ec2.groups={{ name or id of security group assigned to ec2 instances in the cluster ie. sg-1a2b3c4d }}"
 ]
 ```
+
 
 #### Port Mapping
 
@@ -189,6 +197,7 @@ elasticsearch uses port 9300 for communication within the cluster, and exposes i
 ]
 ```
 
+
 #### Environment
 
 the installations heap size (1g by default) can be configured via the ES_HEAP_SIZE environment variable for the container.  The reserved memory of the container must be larger than the ES_HEAP_SIZE.  Recommendations about what to set this value as can be found here: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html
@@ -202,9 +211,11 @@ the installations heap size (1g by default) can be configured via the ES_HEAP_SI
 ]
 ```
 
+
 ### Optional Configuration
 
 The following can be configured in the elasticsearch.yml configuration file if required.
+
 
 #### Node Type
 
@@ -217,6 +228,7 @@ node.master: true
 node.data: true
 ```
 
+
 #### Cluster Name
 
 If multiple clusters are running on the same security group, a name can be specified for each cluster so that they stay seperated during aws discovery.
@@ -224,6 +236,7 @@ If multiple clusters are running on the same security group, a name can be speci
 ```
 cluster.name: gra-elk
 ```
+
 
 #### Index Configuration
 
@@ -236,6 +249,7 @@ index.number_of_shards: 5
 index.number_of_replicas: 1
 ```
 
+
 #### Network Host
 
 This is present in the official elasticsearch container's elasticsearch.yml, and seems to be required for ec2 discovery to function correctly.
@@ -245,6 +259,7 @@ This is present in the official elasticsearch container's elasticsearch.yml, and
 network.host: 0.0.0.0
 ```
 
+
 #### Minimum Master Nodes
 
 When running more than 2 nodes in a cluster, the minimum number of master nodes must be set in order to mitigate the risk of running into the split brain problem.  See: https://www.elastic.co/guide/en/elasticsearch/guide/1.x/_important_configuration_changes.html#_minimum_master_nodes
@@ -253,6 +268,7 @@ When running more than 2 nodes in a cluster, the minimum number of master nodes 
 discovery.zen.minimum_master_nodes: 2
 ```
 
+
 #### Memory
 
 Swapping memory to disk can cause performance issues in a cluster. the memory can be locked using the bootstrap.mlockall option in the configuration file.  See: https://www.elastic.co/guide/en/elasticsearch/guide/current/heap-sizing.html#_swapping_is_the_death_of_performance
@@ -260,6 +276,7 @@ Swapping memory to disk can cause performance issues in a cluster. the memory ca
 ```
 bootstrap.mlockall: true
 ```
+
 
 #### Name
 
