@@ -53,7 +53,12 @@ mount /dev/sdb /opt/vol00
 echo "/dev/sdb /opt/vol00 ext4 defaults,nofail 0 2" >> /etc/fstab
 
 # The Docker daemon must be restarted to see the new mount
-sudo service docker restart
+service docker stop
+# Remove potentially corrupted network kv.db
+# see: https://github.com/docker/docker/issues/18113
+# @TODO: remove this once ECS AMI starts using Docker 1.10+
+rm /var/lib/docker/network/files/local-kv.db
+service docker start
 ```
 
 
