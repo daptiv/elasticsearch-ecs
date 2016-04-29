@@ -52,13 +52,11 @@ mkdir /opt/vol00
 mount /dev/sdb /opt/vol00
 echo "/dev/sdb /opt/vol00 ext4 defaults,nofail 0 2" >> /etc/fstab
 
+# This prevents docker from throwing a "device-mapper: thin: Deletion of thin device 1 failed."  exception when restarting, more investigation is needed to determine why
+docker volume ls
+
 # The Docker daemon must be restarted to see the new mount
-service docker stop
-# Remove potentially corrupted network kv.db
-# see: https://github.com/docker/docker/issues/18113
-# @TODO: remove this once ECS AMI starts using Docker 1.10+
-rm /var/lib/docker/network/files/local-kv.db
-service docker start
+sudo service docker restart
 ```
 
 
