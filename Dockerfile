@@ -1,4 +1,4 @@
-FROM elasticsearch:2.3
+FROM elasticsearch:2.4
 WORKDIR /usr/share/elasticsearch
 RUN bin/plugin install cloud-aws
 RUN bin/plugin install mobz/elasticsearch-head
